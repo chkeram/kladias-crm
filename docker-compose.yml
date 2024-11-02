@@ -10,6 +10,7 @@ services:
       - DATABASE_URL=postgresql://user:password@db:5432/fishdb
     depends_on:
       - db
+    restart: on-failure
 
   frontend:
     build: ./frontend
@@ -19,10 +20,12 @@ services:
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:8000
     depends_on:
-      - backend
+      db:
+        condition: service_healthy
+    restart: on-failure
 
   db:
-    image: postgres:13
+    image: postgres:15.8
     container_name: db
     environment:
       POSTGRES_USER: user
@@ -32,6 +35,11 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U user" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   db_data:
