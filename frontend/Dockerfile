@@ -1,22 +1,22 @@
-# Use an official Node.js runtime as a parent image
-FROM node:14-alpine
+# Use a newer Node.js version
+FROM node:18-alpine
 
-# Set the working directory
+# Set the working directory inside the container to /app
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package.json and package-lock.json into /app
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the code into the container
+# Copy the rest of the application code into /app
 COPY . .
 
 # Build the Next.js application
 RUN npm run build
 
-# Expose port 3000 for the frontend
+# Expose port 3000
 EXPOSE 3000
 
 # Start the application
