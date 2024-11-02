@@ -1,6 +1,6 @@
-fastapi
+fastapi>=0.103.1
 uvicorn[standard]
-SQLAlchemy
+SQLAlchemy>=1.4
 psycopg2-binary
 python-dotenv
-pydantic
+pydantic>=2.0.0

@@ -13,7 +13,7 @@ class Fish(FishBase):
     quantity: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class CustomerBase(BaseModel):
     name: str
@@ -27,7 +27,7 @@ class Customer(CustomerBase):
     orders: List['Order'] = []
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class OrderItemBase(BaseModel):
     fish_id: int
@@ -41,7 +41,7 @@ class OrderItem(OrderItemBase):
     fish: Fish
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class OrderBase(BaseModel):
     customer_id: int
@@ -56,4 +56,4 @@ class Order(OrderBase):
     items: List[OrderItem]
 
     class Config:
-        orm_mode = True
+        from_attributes = True

@@ -39,6 +39,8 @@ def create_order(db: Session, order: schemas.OrderCreate):
         db.add(db_item)
         # Update fish quantity
         fish = db.query(models.Fish).filter(models.Fish.id == item.fish_id).first()
+        if fish.quantity < item.quantity:
+            raise ValueError(f"Not enough {fish.name} in stock.")
         fish.quantity -= item.quantity
     db.commit()
     db.refresh(db_order)
